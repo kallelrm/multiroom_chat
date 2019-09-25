@@ -11,10 +11,11 @@ module.exports.iniciaChat = function (application, req, res){
         res.render('index', {validacao: erros});
         return;
     }
-
+    console.log(dadosForm);
+    
     application.get('io').emit(
         'msgParaClient',
         {apelido: dadosForm.apelido, mensagem: 'acabou de entrar no chat'});
 
-    res.render('chat');
+    res.render('chat', {dadosForm: dadosForm});
 }

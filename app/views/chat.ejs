@@ -79,21 +79,8 @@
 			
 			<div class="row participantes" id="participantes" style="display:none">
 				<div class="col-md-1"></div>
-				<div class="col-md-10">
-					<span class="participante">
-						<img src="images/ico_usuario.png" />
-						Jorge
-					</span>
+				<div class="col-md-10" id='pessoas'>
 					
-					<span class="participante">
-						<img src="images/ico_usuario.png" />
-						José
-					</span>
-					
-					<span class="participante">
-						<img src="images/ico_usuario.png" />
-						Fernando
-					</span>
 				</div>
 				<div class="col-md-1"></div>
                 
@@ -103,16 +90,17 @@
 		<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 			<div class="container">
 				<div class="panel-body campo-mensagem">
-					<form>
+					
 						<div class="col-md-12">
 							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Mensagem">
+								<input type="text" class="form-control" placeholder="Mensagem" id="mensagem">
+								<input type="hidden" value="<%=dadosForm.apelido%>" id='apelido' >
 								<span class="input-group-btn">
-									<button class="btn btn-default" type="button">></button>
+									<button class="btn btn-default" type="button" id="enviar_mensagem">></button>
 								</span>
 							</div>
 						</div>
-					</form>
+					
 				</div>
 			</div>
 		</nav>		
@@ -121,6 +109,20 @@
 		<script src='/socket.io/socket.io.js'> </script>
 		<script>
 			let socket = io('http://localhost:3000');
+
+			$('#enviar_mensagem').click(function(){
+				socket.emit(
+					'msgParaServidor',
+					{ 
+						apelido:$('#apelido').val(),
+						mensagem: $('#mensagem').val() 
+					}
+				);
+				$('#mensagem').val("");
+				$('#mensagem').focus();
+			})
+			
+
 			socket.on('msgParaClient', function(data){
 				let html = '';
 				html += '<div class="dialogo">';
@@ -129,6 +131,20 @@
 				html+='</div>';
 
 				$('#dialogos').append(html);
+				window.scroll(0, document.body.scrollHeight);
+			});
+
+			
+
+			socket.on('participantesParaCliente', function(data){
+				let html = '';
+
+				html += '<span class="participante">';
+					html += '<img src="images/ico_usuario.png"';
+					html+= data.apelido;
+				html+='</span>';
+
+				$('#pessoas').append(html);
 			});
 		</script>
 	</body>
