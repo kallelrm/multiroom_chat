@@ -2,6 +2,18 @@
 const app = require('./config/server');
 
 //parametrizar a porta de escuta
-app.listen(3000, ()=>{
+let server = app.listen(3000, ()=>{
     console.log("Servidor online");
 })
+
+//importando o socket.io e fazendo o módulo esctutar na mesma porta do app
+let io = require('socket.io').listen(server);
+
+//criar a conexão por websocket
+io.on('connection', function(socket){
+    console.log('Usuário conectou');
+
+    socket.on('disconnect', function(){
+        console.log('Usuário desconectou');
+    });
+});
