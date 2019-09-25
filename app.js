@@ -9,6 +9,8 @@ let server = app.listen(3000, ()=>{
 //importando o socket.io e fazendo o módulo esctutar na mesma porta do app
 let io = require('socket.io').listen(server);
 
+app.set('io', io);
+
 //criar a conexão por websocket
 io.on('connection', function(socket){
     console.log('Usuário conectou');
