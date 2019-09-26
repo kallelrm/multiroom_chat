@@ -2,7 +2,7 @@
 const app = require('./config/server');
 
 //parametrizar a porta de escuta
-let server = app.listen(3000, ()=>{
+let server = app.listen(3000, function(){
     console.log("Servidor online");
 })
 
@@ -20,7 +20,8 @@ io.on('connection', function(socket){
     });
 
     socket.on('msgParaServidor', function(data){
-        console.log(data);
+        
+        //dialogo
         socket.emit(
             'msgParaClient', 
             {apelido: data.apelido, mensagem: data.mensagem}
@@ -30,7 +31,7 @@ io.on('connection', function(socket){
             {apelido: data.apelido, mensagem: data.mensagem}
         );
 
-
+        //participantes
         socket.emit(
             'participantesParaCliente', 
             { apelido: data.apelido }

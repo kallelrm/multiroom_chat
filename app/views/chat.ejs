@@ -71,16 +71,15 @@
 		<div class="container">
             <div class="row conversa" id="conversa">
 				<div class="col-md-1"></div>
-				<div class="col-md-10">
                 <div class='col-md-10' id='dialogos'>
-
 				</div>
+				<div class="col-md-1"></div>
+				
             </div>
 			
 			<div class="row participantes" id="participantes" style="display:none">
 				<div class="col-md-1"></div>
 				<div class="col-md-10" id='pessoas'>
-					
 				</div>
 				<div class="col-md-1"></div>
                 
@@ -95,12 +94,12 @@
 							<div class="input-group">
 								<input type="text" class="form-control" placeholder="Mensagem" id="mensagem">
 								<input type="hidden" value="<%=dadosForm.apelido%>" id='apelido' >
+								<input type="hidden" value="0" id="apelido_atualizado_nos_clientes" >
 								<span class="input-group-btn">
 									<button class="btn btn-default" type="button" id="enviar_mensagem">></button>
 								</span>
 							</div>
 						</div>
-					
 				</div>
 			</div>
 		</nav>		
@@ -131,7 +130,8 @@
 				html+='</div>';
 
 				$('#dialogos').append(html);
-				window.scroll(0, document.body.scrollHeight);
+
+				window.scrollTo(0, document.body.scrollHeight);
 			});
 
 			
@@ -140,7 +140,7 @@
 				let html = '';
 
 				html += '<span class="participante">';
-					html += '<img src="images/ico_usuario.png"';
+					html += '<img src="images/ico_usuario.png">';
 					html+= data.apelido;
 				html+='</span>';
 
